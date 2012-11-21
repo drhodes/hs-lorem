@@ -1,0 +1,37 @@
+Name:               lorem
+Version:            0.0.1
+License:            BSD3
+License-File:       LICENSE
+Author:             Derek Rhodes <physci@gmail.com>
+Maintainer:         Derek Rhodes <physci@gmail.com>
+Copyright:          (c) 2012 Derek Rhodes
+Synopsis:           generate random text
+Category:           Text
+Homepage:           https://github.com/drhodes/hs-lorem
+Bug-reports:        https://github.com/drhodes/hs-lorem/issues
+Cabal-Version:      >= 1.8
+Build-Type:         Simple
+Description:
+  lorem
+
+Source-Repository   head
+  Type:             git
+  Location:         https://github.com/drhodes/hs-lorem.git
+
+Flag                small_base
+  Description:      Choose the new, split-up base package.
+
+Library
+  Build-Depends:
+                    base                            >= 3          && < 5,
+                    MonadRandom                     >= 0.1.8,
+                    text                            >= 0.11.2.0
+  GHC-Options:
+                    -Wall -fno-warn-orphans
+
+  Hs-Source-Dirs:
+                    src
+
+  Exposed-Modules:
+                    Text.Lorem
+                    Text.Lorem.Words

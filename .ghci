@@ -1,0 +1,7 @@
+:set -isrc -idist/build/autogen
+:set -Wall 
+:l Text.Lorem
+:m + Text.Lorem
+:set prompt ">> "
+
+

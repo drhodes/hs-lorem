@@ -1,0 +1,12 @@
+*~
+*#*
+/dist
+.hpc
+*.hi
+*.core
+*.o
+TAGS
+
+SourceGraph
+build.sh
+run.sh
