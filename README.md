@@ -6,8 +6,7 @@ Generate lorem ipsum for your haskell project
 import qualified Text.Lorem as TL
 
 -- generate a random paragraph between 3 and 5 sentences long
-main = do txt <- TL.paragraph 3 5 
-          print txt
+main = TL.paragraph 3 5 >>= print
 ```
 
 > "Nos istuc amplitudines fuisse consuetudinis tamdiu manu 
