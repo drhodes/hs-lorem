@@ -12,7 +12,7 @@ Bug-reports:        https://github.com/drhodes/hs-lorem/issues
 Cabal-Version:      >= 1.8
 Build-Type:         Simple
 Description:
-  Lorem ipsum generator.  Wikipedia defines Lorem ipsum as follows: "In publishing and graphic design, lorem ipsum is placeholder text (filler text) commonly used to demonstrate the graphics elements of a document or visual presentation, such as font, typography, and layout, by removing the distraction of meaningful content..." http://en.wikipedia.org/wiki/Lorem_ipsum
+  Lorem ipsum generator.  Wikipedia defines Lorem ipsum as follows: In publishing and graphic design, lorem ipsum is placeholder text (filler text) commonly used to demonstrate the graphics elements of a document or visual presentation, such as font, typography, and layout, by removing the distraction of meaningful content. 
 
 Source-Repository   head
   Type:             git
