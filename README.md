@@ -1,2 +1,1 @@
-generate random text
-
+Generate lorem ipsum for your haskell project
