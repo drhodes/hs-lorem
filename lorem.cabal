@@ -5,14 +5,14 @@ License-File:       LICENSE
 Author:             Derek Rhodes <physci@gmail.com>
 Maintainer:         Derek Rhodes <physci@gmail.com>
 Copyright:          (c) 2012 Derek Rhodes
-Synopsis:           generate random text
+Synopsis:           generates random text
 Category:           Text
 Homepage:           https://github.com/drhodes/hs-lorem
 Bug-reports:        https://github.com/drhodes/hs-lorem/issues
 Cabal-Version:      >= 1.8
 Build-Type:         Simple
 Description:
-  lorem
+  lorem ipsum generator
 
 Source-Repository   head
   Type:             git
