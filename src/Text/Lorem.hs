@@ -54,9 +54,7 @@ natural_word = do
 
 -- | Generate one word with length n
 one_word :: Int -> IO DT.Text
-one_word n = do  
-  let m = min 16 n          
-  fetch_word_len $ m
+one_word n = fetch_word_len $ min 16 n
 
 -- | Generate a word in a specfied range of letters.
 word :: Int -> Int -> IO DT.Text
@@ -97,7 +95,7 @@ sentence m n = do
   withcommas <- insert_commas ws numcomma
   let connected = DT.concat $ DL.intersperse (" ") withcommas
   let first = DT.take 1 connected
-  let rest = DT.drop 1 connected
+  let rest = DT.tail connected
   return $ DT.concat [DT.toUpper first, rest, "."]
 
 -- | Generate a natural appearing sentence
@@ -116,14 +114,14 @@ paragraph m n
 url :: IO DT.Text
 url = do n <- range 0 2
          h <- host
-         let base = DT.concat ["http://.", h]
+         let base = DT.concat ["http://", h]
          w1 <- word 2 8
          w2 <- word 2 8
          return $ case n of 
                     0 -> base 
                     1 -> DT.concat [base, "/", w1]
                     2 -> DT.concat [base, "/", w1, "/", w2, ".html"]
-                    _ -> error "the Text.Lorem.range function is malfunctioning"
+                    _ -> "the Text.Lorem.range function is malfunctioning"
 
 -- | Generate a random host
 host :: IO DT.Text
@@ -132,7 +130,7 @@ host = do n <- range 0 2
                       0 -> ".com"
                       1 -> ".net"
                       2 -> ".org"
-                      _ -> error "the Text.Lorem.range function is malfunctioning"
+                      _ -> "the Text.Lorem.range function is malfunctioning"
           w1 <- word 2 8
           w2 <- word 2 8
           return $ DT.concat [w1, w2, tld]
