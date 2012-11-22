@@ -1,9 +1,11 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Text.Lorem.Words where
 
 import qualified Data.Text as DT
 
 words :: [DT.Text]
-words = map DT.pack [ "a"
+words = [ "a"
         , "ab"
         , "abditioribus"
         , "abditis"

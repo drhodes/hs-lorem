@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Text.Lorem 
     ( host 
     , url
@@ -53,7 +55,7 @@ natural_word = do
 -- | Generate one word with length n
 one_word :: Int -> IO DT.Text
 one_word n = do  
-  let m = if n > 16 then 16 else n
+  let m = min 16 n          
   fetch_word_len $ m
 
 -- | Generate a word in a specfied range of letters.
@@ -75,7 +77,7 @@ insert_commas xs depth = do
          ; let last' = last front
          ; let last'' = if ends_with_comma last'
                         then last'
-                        else DT.concat [last', DT.pack ","]
+                        else DT.concat [last', ","]
          ; let front' = if length front == 0
                         then [last'']
                         else (init front) ++ [last'']
@@ -87,18 +89,18 @@ insert_commas xs depth = do
 -- | Generate a sentence with a specified range of words.
 sentence :: Int -> Int -> IO DT.Text
 sentence m n = do   
-  let minwords = if m < 5 then 5 else m
-  let maxwords = if n < 5 then 5 else n
+  let minwords = max m 5
+  let maxwords = max n 5
   numwords <- range minwords maxwords
   numcomma <- range 0 2
   ws <- sequence $ take numwords $ repeat natural_word
   withcommas <- insert_commas ws numcomma
-  let connected = DT.concat $ DL.intersperse (DT.pack " ") withcommas
+  let connected = DT.concat $ DL.intersperse (" ") withcommas
   let first = DT.take 1 connected
   let rest = DT.drop 1 connected
-  return $ DT.concat [DT.toUpper first, rest, DT.pack "."]
+  return $ DT.concat [DT.toUpper first, rest, "."]
 
--- | Generate a sentence with a natural length
+-- | Generate a natural appearing sentence
 natural_sentence :: IO DT.Text
 natural_sentence = do n <- range 5 22
                       sentence n n
@@ -108,23 +110,20 @@ paragraph :: Int -> Int -> IO DT.Text
 paragraph m n 
     = do numsents <- range m n
          sents <- sequence $ take numsents $ repeat natural_sentence
-         return $ DT.concat $ DL.intersperse (DT.pack " ") sents
-
-slash :: DT.Text
-slash = DT.pack "/"
+         return $ DT.concat $ DL.intersperse (" ") sents
 
 -- | Generate a random URL
 url :: IO DT.Text
 url = do n <- range 0 2
          h <- host
-         let base = DT.concat [DT.pack "http://.", h]
+         let base = DT.concat ["http://.", h]
          w1 <- word 2 8
          w2 <- word 2 8
          return $ case n of 
                     0 -> base 
-                    1 -> DT.concat [base, slash, w1]
-                    2 -> DT.concat [base, slash, w1, slash, w2, DT.pack ".html"]
-                    _ -> error "the range function is malfunctioning"
+                    1 -> DT.concat [base, "/", w1]
+                    2 -> DT.concat [base, "/", w1, "/", w2, ".html"]
+                    _ -> error "the Text.Lorem.range function is malfunctioning"
 
 -- | Generate a random host
 host :: IO DT.Text
@@ -133,13 +132,13 @@ host = do n <- range 0 2
                       0 -> ".com"
                       1 -> ".net"
                       2 -> ".org"
-                      _ -> error "the range function is malfunctioning"
+                      _ -> error "the Text.Lorem.range function is malfunctioning"
           w1 <- word 2 8
           w2 <- word 2 8
-          return $ DT.concat [w1, w2, DT.pack tld]
+          return $ DT.concat [w1, w2, tld]
 
 -- | Generate a random email address
 email :: IO DT.Text
 email = do w <- word 4 10 
            h <- host
-           return $ DT.concat [w, DT.pack "@", h]
+           return $ DT.concat [w, "@", h]
