@@ -42,7 +42,7 @@ range m n = CMR.evalRandIO $ CMR.getRandomR (m,n)
 -- | Fetch a word with length n
 fetch_word_len :: Int -> IO DT.Text
 fetch_word_len n = do 
-  let ws = [w | w <- TLW.words, DT.length w == n]
+  let ws = [w | w <- TLW.latin, DT.length w == n]
   idx <- range 0 $ (length ws) - 1
   return $ ws !! idx
 

@@ -1,11 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Text.Lorem.Words where
+module Text.Lorem.Words (latin) where
 
 import qualified Data.Text as DT
 
-words :: [DT.Text]
-words = [ "a"
+-- embedding this word list with file-embed introduces template
+-- haskell and takes longer to compile.
+
+latin :: [DT.Text]
+latin = [ "a"
         , "ab"
         , "abditioribus"
         , "abditis"

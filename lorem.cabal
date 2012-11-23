@@ -11,12 +11,15 @@ Homepage:           https://github.com/drhodes/hs-lorem
 Bug-reports:        https://github.com/drhodes/hs-lorem/issues
 Cabal-Version:      >= 1.8
 Build-Type:         Simple
+
 Description:
-  Lorem ipsum generator.  Wikipedia defines Lorem ipsum as follows: In publishing and graphic design, lorem ipsum is placeholder text (filler text) commonly used to demonstrate the graphics elements of a document or visual presentation, such as font, typography, and layout, by removing the distraction of meaningful content. 
+  Lorem ipsum generator. Wikipedia defines Lorem ipsum as follows: In publishing and graphic design, lorem ipsum is placeholder text (filler text) commonly used to demonstrate the graphics elements of a document or visual presentation, such as font, typography, and layout, by removing the distraction of meaningful content.
 
 Source-Repository   head
   Type:             git
   Location:         https://github.com/drhodes/hs-lorem.git
+
+
 
 Flag                small_base
   Description:      Choose the new, split-up base package.
@@ -26,6 +29,7 @@ Library
                     base                            >= 3          && < 5,
                     MonadRandom                     >= 0.1.8,
                     text                            >= 0.11.2.0
+
   GHC-Options:
                     -Wall -fno-warn-orphans
 
