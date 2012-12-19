@@ -1,3 +1,4 @@
+{-# LANGUAGE DoAndIfThenElse #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Text.Lorem 
@@ -6,6 +7,7 @@ module Text.Lorem
     , email
     , natural_word
     , natural_sentence
+    , sentence
     , paragraph
     , word
     ) where
@@ -48,9 +50,7 @@ fetch_word_len n = do
 
 -- | Generate a word with a natural length, 
 natural_word :: IO DT.Text
-natural_word = do 
-  n <- range 0 100
-  fetch_word_len $ gen_word_len n
+natural_word = range 0 100 >>= fetch_word_len . gen_word_len
 
 -- | Generate one word with length n
 one_word :: Int -> IO DT.Text
@@ -65,24 +65,22 @@ ends_with_comma x = DT.last x == ','
 
 insert_commas :: [DT.Text] -> Int -> IO [DT.Text]
 insert_commas xs depth = do 
-  {
-  ; if depth <= 0 
-    then return xs
-    else do { 
-         ; n <- range 1 $ (length xs) - 2
-         ; let front = take n xs 
-         ; let back = drop n xs
-         ; let last' = last front
-         ; let last'' = if ends_with_comma last'
-                        then last'
-                        else DT.concat [last', ","]
-         ; let front' = if length front == 0
-                        then [last'']
-                        else (init front) ++ [last'']
-         ; let result = front' ++ back
-         ; insert_commas result (depth - 1)
-         }
-}
+  if depth <= 0 
+  then return xs
+  else do
+    n <- range 1 $ (length xs) - 2
+    let front = take n xs 
+        back = drop n xs
+        last' = last front
+        last'' = if ends_with_comma last'
+                 then last'
+                 else DT.concat [last', ","]
+        front' = if length front == 0
+                 then [last'']
+                 else (init front) ++ [last'']
+        result = front' ++ back
+    insert_commas result (depth - 1)
+
 
 -- | Generate a sentence with a specified range of words.
 sentence :: Int -> Int -> IO DT.Text
@@ -94,8 +92,8 @@ sentence m n = do
   ws <- sequence $ take numwords $ repeat natural_word
   withcommas <- insert_commas ws numcomma
   let connected = DT.concat $ DL.intersperse (" ") withcommas
-  let first = DT.take 1 connected
-  let rest = DT.tail connected
+      first = DT.take 1 connected
+      rest = DT.tail connected
   return $ DT.concat [DT.toUpper first, rest, "."]
 
 -- | Generate a natural appearing sentence
